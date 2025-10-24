@@ -1,0 +1,7 @@
+
+https://matplotlib.org/stable/plot_types/basic/stackplot.html
+
+
+Energianvändning
+
+python .\main.py energi.csv bar "Energianvändning (t CO2e/år)" 

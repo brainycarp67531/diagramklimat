@@ -1,5 +1,8 @@
+# ...existing code...
 import pandas as pd
-from mpl_toolkits.mplot3d import Axes3D
+import mpl_toolkits
+import numpy as np
+# from mpl_toolkits.mplot3d import Axes3D
 import sys
 
 import matplotlib.pyplot as plt
@@ -9,7 +12,7 @@ def generate_bar_chart(data, title="Bar Chart", xlabel="X-axis", ylabel="Y-axis"
     data.plot(kind='bar')
     plt.title(title)
     plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    # plt.ylabel(ylabel)
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig('bar_chart.png')
@@ -32,22 +35,23 @@ def generate_surface_chart(data, title="Surface Chart"):
     plt.close()
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python main.py <csv_file> <chart_type>")
+    if len(sys.argv) < 3:
+        print("Usage: python main.py <csv_file> <chart_type> [title]")
         print("Chart types: bar, surface")
         return
     
     csv_file = sys.argv[1]
     chart_type = sys.argv[2].lower()
+    title = " ".join(sys.argv[3:]) if len(sys.argv) > 3 else None
     
     try:
         data = pd.read_csv(csv_file)
         
         if chart_type == "bar":
-            generate_bar_chart(data)
+            generate_bar_chart(data, title=title or "Bar Chart")
             print("Bar chart generated as 'bar_chart.png'")
         elif chart_type == "surface":
-            generate_surface_chart(data)
+            generate_surface_chart(data, title=title or "Surface Chart")
             print("Surface chart generated as 'surface_chart.png'")
         else:
             print("Invalid chart type. Please use 'bar' or 'surface'")
