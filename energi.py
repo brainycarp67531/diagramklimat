@@ -7,9 +7,9 @@ def generate_bar_chart(data):
 
     # Expecting one row with three columns
     if data.shape[1] < 3:
-        raise ValueError("CSV must have at least 3 columns for Före, Efter, and Mål.")
+        raise ValueError("CSV must have at least 3 columns for Före, Efter, and Besparing.")
 
-    categories = ['Före', 'Efter', 'Mål']
+    categories = ['Före', 'Efter', 'Besparing']
     values_left = data.iloc[0, 0:2].tolist()  # First two values
     value_right = data.iloc[0, 2]             # Third value
 
@@ -38,14 +38,14 @@ def generate_bar_chart(data):
     plt.legend(handles1 + handles2, labels1 + labels2, loc='upper center',
                bbox_to_anchor=(0.5, -0.15), ncol=3, fontsize=9)
 
-    plt.title("Energianvändning (t CO2e/år)")
+    plt.title("Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)")
     plt.tight_layout()
-    plt.savefig('bar_chart.png')
+    plt.savefig('energy.png')
     plt.close()
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python energi.py <csv_file>")
+        print("Usage: python energy.py <csv_file>")
         return
 
     csv_file = sys.argv[1]
@@ -53,7 +53,7 @@ def main():
     try:
         data = pd.read_csv(csv_file, index_col=0)
         generate_bar_chart(data)
-        print("Bar chart generated as 'bar_chart.png'")
+        print("Bar chart generated as 'energy_chart.png'")
     except Exception as e:
         print(f"Error: {str(e)}")
 
