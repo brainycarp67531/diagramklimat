@@ -2,37 +2,43 @@ import pandas as pd
 import sys
 import matplotlib.pyplot as plt
 
-def generate_bar_chart(data, xlabel="X-axis", ylabel="Y-axis"):
-    plt.figure(figsize=(10, 6))
-    
-    # Set the color for the bars. 
-    colors = ["#6F895F", '#C4D2C9']
-    
-    ax = data.plot(kind='bar', color=colors)
+def generate_bar_chart(data):
+    fig_width, fig_height = 16/2.54, 8/2.54
+
+    # Expecting one row with three columns
+    if data.shape[1] < 3:
+        raise ValueError("CSV must have at least 3 columns for Före, Efter, and Mål.")
+
+    categories = ['Före', 'Efter', 'Mål']
+    values_left = data.iloc[0, 0:2].tolist()  # First two values
+    value_right = data.iloc[0, 2]             # Third value
+
+    colors_left = ['#6F895F', '#6F895F']
+    color_right = '#C4D2C9'
+
+    fig, ax1 = plt.subplots(figsize=(fig_width, fig_height))
+
+    bars_left = ax1.bar(categories[:2], values_left, color=colors_left, label=['Före', 'Efter'])
+    # ax1.set_ylabel('Vänster Y-axel')
+
+    ax2 = ax1.twinx()
+    bar_right = ax2.bar(categories[2], value_right, color=color_right, label='Besparing')
+    # ax2.set_ylabel('Höger Y-axel')
+
+    # Add annotations
+    for bar in bars_left:
+        ax1.annotate(f'{bar.get_height():.2f}', (bar.get_x() + bar.get_width()/2, bar.get_height()),
+                     xytext=(0, -12), textcoords="offset points", ha='center', fontsize=9)
+    for bar in bar_right:
+        ax2.annotate(f'{bar.get_height():.2f}', (bar.get_x() + bar.get_width()/2, bar.get_height()),
+                     xytext=(0, -12), textcoords="offset points", ha='center', fontsize=9)
+
+    handles1, labels1 = ax1.get_legend_handles_labels()
+    handles2, labels2 = ax2.get_legend_handles_labels()
+    plt.legend(handles1 + handles2, labels1 + labels2, loc='upper center',
+               bbox_to_anchor=(0.5, -0.15), ncol=3, fontsize=9)
+
     plt.title("Energianvändning (t CO2e/år)")
-    # Sätt egna etiketter om det finns exakt två indexrader
-    if len(data.index) == 2:
-        ax.set_xticks(range(len(data.index)))
-        # Sätter etiketterna under varje stapel. 
-        ax.set_xticklabels(['Före', 'Efter'])
-    else:
-        ax.set_xticklabels(data.index.astype(str), rotation=0)
-    plt.xticks(rotation=0)
-
-    # --- Lägg till värden över varje stapel ---
-    for p in ax.patches:
-        height = p.get_height()
-        # hoppa över NaN
-        if pd.isna(height):
-            continue
-        ax.annotate(f'{height:.2f}',  # Changed from .0f to .2f to show two decimal place
-                    (p.get_x() + p.get_width() / 2, height),
-                    xytext=(0, 3),  # offset i punkter
-                    textcoords="offset points",
-                    ha='center', va='bottom',
-                    fontsize=9)
-    # ------------------------------------
-
     plt.tight_layout()
     plt.savefig('bar_chart.png')
     plt.close()
@@ -45,7 +51,7 @@ def main():
     csv_file = sys.argv[1]
 
     try:
-        data = pd.read_csv(csv_file)
+        data = pd.read_csv(csv_file, index_col=0)
         generate_bar_chart(data)
         print("Bar chart generated as 'bar_chart.png'")
     except Exception as e:
