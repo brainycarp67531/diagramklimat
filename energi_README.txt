@@ -6,7 +6,7 @@ energi.py — Användning och indata­beskrivning
 
 Syfte
 - Skapar ett stapeldiagram (PNG) som visar energivärden: "Före", "Efter" och "Besparing".
-- Skriptet läser in en CSV-fil och skriver ut energy.png.
+- Skriptet läser in en CSV-fil och skriver ut energi.png.
 
 Krav
 - Python 3
@@ -14,11 +14,11 @@ Krav
 - matplotlib
 Installation: pip install pandas matplotlib
 
-CSV-struktur (energy.csv)
+CSV-struktur (energi.csv)
 - Kommaavgränsad fil med rubrikrad och en datarad.
-- Obligatoriska kolumner (i denna ordning): Category, Före, Efter, Besparing
+- Obligatoriska kolumner (i denna ordning): Kategori, Före, Efter, Besparing
 - Exempel:
-  Category,Före,Efter,Besparing
+  Kategori,Före,Efter,Besparing
   Energianvändning,3.25,2.25,1.0
 
 Funktion
@@ -28,7 +28,7 @@ Funktion
   - "Besparing" som en tredje stapel (ritad med sekundär y-axel).
 - Skriptet lägger till numeriska etiketter ovanpå staplarna.
 - Rubriken är fast: "Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)".
-- Resultatet sparas som energy.png i samma mapp.
+- Resultatet sparas som energi.png i samma mapp.
 
 Körning (Windows)
 - Från projektmappen:
@@ -58,11 +58,11 @@ Requirements
 - matplotlib
 Install: pip install pandas matplotlib
 
-CSV structure (energy.csv)
+CSV structure (energi.csv)
 - Comma-separated file with header and one data row.
-- Required columns (in this order): Category, Före, Efter, Besparing
+- Required columns (in this order): Kategori, Före, Efter, Besparing
 - Example:
-  Category,Före,Efter,Besparing
+  Kategori,Före,Efter,Besparing
   Energianvändning,3.25,2.25,1.0
 
 Behavior
@@ -72,14 +72,14 @@ Behavior
   - "Besparing" as a third bar (plotted using a secondary y-axis).
 - Adds numeric annotations on top of bars.
 - Sets a fixed title: "Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)".
-- Saves the result as energy.png in the same folder.
+- Saves the result as energi.png in the same folder.
 
 How to run (Windows)
 - From the repository folder:
   python energi.py energi.csv
 
 Output
-- energy.png saved to the current folder.
+- energi.png saved to the current folder.
 
 Notes and limitations
 - The script is intended for a single data row with three values. For multiple rows or different column layouts the code must be adapted.

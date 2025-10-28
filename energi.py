@@ -40,12 +40,12 @@ def generate_bar_chart(data):
 
     plt.title("Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)")
     plt.tight_layout()
-    plt.savefig('energy.png')
+    plt.savefig('energi.png')
     plt.close()
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python energy.py <csv_file>")
+        print("Usage: python energi.py <csv_file>")
         return
 
     csv_file = sys.argv[1]
@@ -53,7 +53,7 @@ def main():
     try:
         data = pd.read_csv(csv_file, index_col=0)
         generate_bar_chart(data)
-        print("Bar chart generated as 'energy_chart.png'")
+        print("Bar chart generated as 'energi.png'")
     except Exception as e:
         print(f"Error: {str(e)}")
 
