@@ -1,87 +1,129 @@
-----------------------------------------
-SVENSK VERSION
-----------------------------------------
+# energi.py — Visualisering av energibesparing
 
-energi.py — Användning och indata­beskrivning
+Detta Python-skript används för att skapa ett **stapeldiagram (PNG)** som visualiserar energivärden:  
+**Före**, **Efter** och **Besparing** — exempelvis vid jämförelse mellan en gammal och en ny pump.
 
-Syfte
-- Skapar ett stapeldiagram (PNG) som visar energivärden: "Före", "Efter" och "Besparing".
-- Skriptet läser in en CSV-fil och skriver ut energi.png.
+---
 
-Krav
-- Python 3
-- pandas
-- matplotlib
-Installation: pip install pandas matplotlib
+## Syfte
 
-CSV-struktur (energi.csv)
-- Kommaavgränsad fil med rubrikrad och en datarad.
-- Obligatoriska kolumner (i denna ordning): Kategori, Före, Efter, Besparing
-- Exempel:
-  Kategori,Före,Efter,Besparing
-  Energianvändning,3.25,2.25,1.0
+- Läsa in energidata från en CSV-fil.  
+- Skapa ett stapeldiagram som visar energiförändring och besparing i ton CO₂e per år.  
+- Flytta den bearbetade CSV-filen till en arkivmapp.  
 
-Funktion
-- Skriptet läser den första dataraden och förväntar sig minst tre numeriska kolumner efter Category.
-- Diagrammet visar:
-  - "Före" och "Efter" som två staplar (vänster y-axel).
-  - "Besparing" som en tredje stapel (ritad med sekundär y-axel).
-- Skriptet lägger till numeriska etiketter ovanpå staplarna.
-- Rubriken är fast: "Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)".
-- Resultatet sparas som energi.png i samma mapp.
+---
 
-Körning (Windows)
-- Från projektmappen:
-  python energi.py energi.csv
+## Struktur
 
-Utdata
-- Filer: energy.png sparas i aktuell mapp.
+```
+projektmapp/
+│
+├── energi.py
+├── config.json
+├── indata/
+│   └── exempel.csv
+├── utdata/
+│   └── (skapade diagram sparas här)
+└── arkiv/
+    └── (bearbetade CSV-filer flyttas hit)
+```
 
-Noteringar och begränsningar
-- Skriptet är avsett för en enda datarad med tre värden. För flera rader eller annan kolumnstruktur behöver koden anpassas.
-- Om CSV-filen innehåller färre än tre datakolumner uppstår ett ValueError.
-- Kontrollera att rubriknamn inte innehåller extra mellanslag (t.ex. använd "Före", inte " Före").
+---
 
+## Krav
 
+### Programvara
+- **Python 3.9** eller senare  
+- Följande Python-paket:
+  ```bash
+  pip install pandas matplotlib
+  ```
 
-----------------------------------------
-ENGLISH VERSION
-----------------------------------------
+*(Du kan också installera via en `requirements.txt` om du vill.)*
 
-Purpose
-- Generate a bar chart (PNG) that visualizes energy values: "Före", "Efter" and "Besparing".
-- The script reads a CSV and writes energy.png.
+---
 
-Requirements
-- Python 3
-- pandas
-- matplotlib
-Install: pip install pandas matplotlib
+## Konfigurationsfil (`config.json`)
 
-CSV structure (energi.csv)
-- Comma-separated file with header and one data row.
-- Required columns (in this order): Kategori, Före, Efter, Besparing
-- Example:
-  Kategori,Före,Efter,Besparing
-  Energianvändning,3.25,2.25,1.0
+Alla sökvägar styrs via filen `config.json`:
 
-Behavior
-- The script reads the first data row and expects at least three numeric columns after the Category.
-- Plots:
-  - "Före" and "Efter" as two bars (left axis).
-  - "Besparing" as a third bar (plotted using a secondary y-axis).
-- Adds numeric annotations on top of bars.
-- Sets a fixed title: "Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)".
-- Saves the result as energi.png in the same folder.
+```json
+{
+    "energi": {
+        "indata": "indata/",
+        "arkiv": "arkiv/",
+        "utdata": "utdata/"
+    }
+}
+```
 
-How to run (Windows)
-- From the repository folder:
-  python energi.py energi.csv
+- **indata**: mapp där CSV-filer hämtas från  
+- **arkiv**: mapp dit bearbetade filer flyttas  
+- **utdata**: mapp där PNG-diagram sparas  
 
-Output
-- energi.png saved to the current folder.
+---
 
-Notes and limitations
-- The script is intended for a single data row with three values. For multiple rows or different column layouts the code must be adapted.
-- If the CSV has fewer than 3 data columns, the program raises a ValueError.
-- Ensure header names have no extra spaces (e.g. use "Före", not " Före").
+## CSV-struktur
+
+CSV-filen ska innehålla **minst tre kolumner** som representerar:
+1. **Före**  
+2. **Efter**  
+3. **Besparing**
+
+Exempel (`indata/energibesparing.csv`):
+
+```csv
+, Före, Efter, Besparing
+Energivärden, 150, 100, 50
+```
+
+> **Obs:** Endast första raden används för beräkningen.
+
+---
+
+## Körning
+
+Från terminalen, kör:
+```bash
+python energi.py energibesparing
+```
+
+Skriptet kommer då att:
+1. Läsa in `indata/energibesparing.csv`
+2. Skapa stapeldiagrammet `utdata/energibesparing_energi.png`
+3. Flytta `energibesparing.csv` till `arkiv/`
+
+---
+
+## Resultat
+
+- Bildfilen (`.png`) visar tre staplar:
+  - **Före** – ursprungligt värde  
+  - **Efter** – nytt värde  
+  - **Besparing** – skillnaden i t CO₂e/år  
+
+Diagrammet sparas automatiskt i den mapp som anges i `config.json`.
+
+---
+
+## Felhantering
+
+- Om `config.json` saknas → visas ett tydligt felmeddelande.  
+- Om CSV-filen inte hittas → skriptet avbryts med varning.  
+- Om CSV:n har färre än tre kolumner → kastas ett `ValueError`.  
+
+---
+
+## Tips
+
+- Använd `Path` från `pathlib` för att enkelt ändra sökvägar.
+- Anpassa färger och titel i funktionen `generate_bar_chart()` om du vill ändra utseendet.
+- Du kan skapa flera diagram genom att lägga in flera CSV-filer i `indata/` och köra kommandot flera gånger.
+
+---
+
+## Licens
+
+Fri att använda och modifiera. Ange gärna källa om du delar vidare.
+
+---

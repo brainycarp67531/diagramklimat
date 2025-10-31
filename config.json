@@ -1,0 +1,7 @@
+{
+    "energi": {
+        "indata": "indata_energi/",
+        "utdata": "utdata/",
+        "arkiv": "archive/energi"
+    }
+}
