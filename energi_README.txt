@@ -76,12 +76,12 @@ Obs: Endast första raden används för beräkningen.
 Körning
 
 Från terminalen, kör:
-python energi.py energibesparing
+python energi.py 123456
 
 Skriptet kommer då att:
-1. Läsa in indata/energibesparing.csv
+1. Läsa in indata/123456.csv
 2. Skapa stapeldiagrammet utdata/energibesparing_energi.png
-3. Flytta energibesparing.csv till arkiv/
+3. Flytta 123456.csv till arkiv/
 
 ---
 
@@ -101,19 +101,5 @@ Felhantering
 - Om config.json saknas → visas ett tydligt felmeddelande.  
 - Om CSV-filen inte hittas → skriptet avbryts med varning.  
 - Om CSV:n har färre än tre kolumner → kastas ett ValueError.  
-
----
-
-Tips
-
-- Använd Path från pathlib för att enkelt ändra sökvägar.
-- Anpassa färger och titel i funktionen generate_bar_chart() om du vill ändra utseendet.
-- Du kan skapa flera diagram genom att lägga in flera CSV-filer i indata/ och köra kommandot flera gånger.
-
----
-
-Licens
-
-Fri att använda och modifiera. Ange gärna källa om du delar vidare.
 
 ---
