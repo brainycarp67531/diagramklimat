@@ -1,13 +1,12 @@
 {
-    "energi": {
-        "indata": "indata_energi/",
-        "utdata": "utdata/",
-        "arkiv": "archive/energi"
-    },
-
-    "material": {
-        "indata": "indata_material/",
-        "utdata": "utdata/",
-        "arkiv": "archive/material"
-    }
+  "energi": {
+    "indata": "data/energi/indata",
+    "utdata": "data/energi/utdata",
+    "arkiv": "data/energi/arkiv"
+  },
+  "material": {
+    "indata": "data/material/indata",
+    "utdata": "data/material/utdata",
+    "arkiv": "data/material/arkiv"
+  }
 }
