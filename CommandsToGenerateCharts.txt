@@ -13,3 +13,10 @@ python \energi.py [projeknummer]
 
 example: python .\energi.py 123456
 
+
+
+charts.py
+python charts.py energi mydata
+python charts.py material pumpdata
+
+
