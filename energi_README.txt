@@ -1,11 +1,11 @@
-# energi.py — Visualisering av energibesparing
+energi.py — Visualisering av energibesparing
 
-Detta Python-skript används för att skapa ett **stapeldiagram (PNG)** som visualiserar energivärden:  
-**Före**, **Efter** och **Besparing** — exempelvis vid jämförelse mellan en gammal och en ny pump.
+Detta Python-skript används för att skapa ett stapeldiagram (PNG) som visualiserar energivärden:  
+Före, Efter och Besparing — exempelvis vid jämförelse mellan en gammal och en ny pump.
 
 ---
 
-## Syfte
+Syfte
 
 - Läsa in energidata från en CSV-fil.  
 - Skapa ett stapeldiagram som visar energiförändring och besparing i ton CO₂e per år.  
@@ -13,9 +13,8 @@ Detta Python-skript används för att skapa ett **stapeldiagram (PNG)** som visu
 
 ---
 
-## Struktur
+Struktur
 
-```
 projektmapp/
 │
 ├── energi.py
@@ -26,28 +25,24 @@ projektmapp/
 │   └── (skapade diagram sparas här)
 └── arkiv/
     └── (bearbetade CSV-filer flyttas hit)
-```
 
 ---
 
-## Krav
+Krav
 
-### Programvara
-- **Python 3.9** eller senare  
+Programvara
+- Python 3.9 eller senare  
 - Följande Python-paket:
-  ```bash
   pip install pandas matplotlib
-  ```
 
-*(Du kan också installera via en `requirements.txt` om du vill.)*
+(Du kan också installera via en requirements.txt om du vill.)
 
 ---
 
-## Konfigurationsfil (`config.json`)
+Konfigurationsfil (config.json)
 
-Alla sökvägar styrs via filen `config.json`:
+Alla sökvägar styrs via filen config.json:
 
-```json
 {
     "energi": {
         "indata": "indata/",
@@ -55,74 +50,69 @@ Alla sökvägar styrs via filen `config.json`:
         "utdata": "utdata/"
     }
 }
-```
 
-- **indata**: mapp där CSV-filer hämtas från  
-- **arkiv**: mapp dit bearbetade filer flyttas  
-- **utdata**: mapp där PNG-diagram sparas  
+- indata: mapp där CSV-filer hämtas från  
+- arkiv: mapp dit bearbetade filer flyttas  
+- utdata: mapp där PNG-diagram sparas  
 
 ---
 
-## CSV-struktur
+CSV-struktur
 
-CSV-filen ska innehålla **minst tre kolumner** som representerar:
-1. **Före**  
-2. **Efter**  
-3. **Besparing**
+CSV-filen ska innehålla minst tre kolumner som representerar:
+1. Före  
+2. Efter  
+3. Besparing
 
-Exempel (`indata/energibesparing.csv`):
+Exempel (indata/energibesparing.csv):
 
-```csv
 , Före, Efter, Besparing
 Energivärden, 150, 100, 50
-```
 
-> **Obs:** Endast första raden används för beräkningen.
+Obs: Endast första raden används för beräkningen.
 
 ---
 
-## Körning
+Körning
 
 Från terminalen, kör:
-```bash
 python energi.py energibesparing
-```
 
 Skriptet kommer då att:
-1. Läsa in `indata/energibesparing.csv`
-2. Skapa stapeldiagrammet `utdata/energibesparing_energi.png`
-3. Flytta `energibesparing.csv` till `arkiv/`
+1. Läsa in indata/energibesparing.csv
+2. Skapa stapeldiagrammet utdata/energibesparing_energi.png
+3. Flytta energibesparing.csv till arkiv/
 
 ---
 
-## Resultat
+Resultat
 
-- Bildfilen (`.png`) visar tre staplar:
-  - **Före** – ursprungligt värde  
-  - **Efter** – nytt värde  
-  - **Besparing** – skillnaden i t CO₂e/år  
+- Bildfilen (.png) visar tre staplar:
+  - Före – ursprungligt värde  
+  - Efter – nytt värde  
+  - Besparing – skillnaden i t CO₂e/år  
 
-Diagrammet sparas automatiskt i den mapp som anges i `config.json`.
+Diagrammet sparas automatiskt i den mapp som anges i config.json.
 
 ---
 
-## Felhantering
+Felhantering
 
-- Om `config.json` saknas → visas ett tydligt felmeddelande.  
+- Om config.json saknas → visas ett tydligt felmeddelande.  
 - Om CSV-filen inte hittas → skriptet avbryts med varning.  
-- Om CSV:n har färre än tre kolumner → kastas ett `ValueError`.  
+- Om CSV:n har färre än tre kolumner → kastas ett ValueError.  
 
 ---
 
-## Tips
+Tips
 
-- Använd `Path` från `pathlib` för att enkelt ändra sökvägar.
-- Anpassa färger och titel i funktionen `generate_bar_chart()` om du vill ändra utseendet.
-- Du kan skapa flera diagram genom att lägga in flera CSV-filer i `indata/` och köra kommandot flera gånger.
+- Använd Path från pathlib för att enkelt ändra sökvägar.
+- Anpassa färger och titel i funktionen generate_bar_chart() om du vill ändra utseendet.
+- Du kan skapa flera diagram genom att lägga in flera CSV-filer i indata/ och köra kommandot flera gånger.
 
 ---
 
-## Licens
+Licens
 
 Fri att använda och modifiera. Ange gärna källa om du delar vidare.
 
