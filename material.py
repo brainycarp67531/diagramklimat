@@ -8,7 +8,7 @@ from pathlib import Path
 
 def generate_bar_chart(data, file_name, config):
     """
-    Generate and save a bar chart comparing 'Före', 'Efter', and 'Besparing'.
+    Generate and save a bar chart comparing 'Ny Pump', 'Renoverad Pump', and 'Besparing'.
 
     Parameters:
         data (pd.DataFrame): Input data containing at least three columns.
@@ -18,25 +18,25 @@ def generate_bar_chart(data, file_name, config):
     # Convert cm to inches (Matplotlib expects inches)
     fig_width, fig_height = 16 / 2.54, 8 / 2.54
 
-    # Expecting one row with at least three columns (Före, Efter, Besparing)
+    # Expecting one row with at least three columns (Ny Pump, Renoverad Pump, Besparing)
     if data.shape[1] < 3:
-        raise ValueError("CSV must have at least 3 columns: Före, Efter, and Besparing.")
+        raise ValueError("CSV must have at least 3 columns: Ny Pump, Renoverad Pump, and Besparing.")
 
-    categories = ['Före', 'Efter', 'Besparing']
+    categories = ['Ny Pumptest', 'Renoverad Pump', 'Besparing']
 
     # Extract values for plotting
-    values_left = data.iloc[0, 0:2].tolist()  # First two values (Före, Efter)
+    values_left = data.iloc[0, 0:2].tolist()  # First two values (Ny Pump, Renoverad Pump)
     value_right = data.iloc[0, 2]             # Third value (Besparing)
 
     # Define colors for bars
-    colors_left = ['#6F895F', '#6F895F']      # Darker green for Före/Efter
+    colors_left = ['#6F895F', '#6F895F']      # Darker green for Ny Pump/Renoverad Pump
     color_right = '#C4D2C9'                   # Lighter green for Besparing
 
     # Create the figure and two Y-axes (shared X-axis)
     fig, ax1 = plt.subplots(figsize=(fig_width, fig_height))
     ax2 = ax1.twinx()
 
-    # Plot 'Före' and 'Efter' on left axis
+    # Plot 'Ny Pump' and 'Renoverad Pump' on left axis
     bars_left = ax1.bar(categories[:2], values_left, color=colors_left, label=['Klimatavtryck', ''])
 
     # Plot 'Besparing' on right axis
@@ -76,11 +76,11 @@ def generate_bar_chart(data, file_name, config):
     )
 
     # Set title and layout
-    plt.title("Årlig CO₂e-besparing vid energiminskning (t CO₂e/år)")
+    plt.title("TBD (t CO₂e/år)")
     plt.tight_layout()
 
     # Save to output folder specified in config
-    output_path = Path(config["energi"]["utdata"]) / file_name
+    output_path = Path(config["material"]["utdata"]) / file_name
     plt.savefig(output_path)
     plt.close()
 
@@ -90,7 +90,7 @@ def generate_bar_chart(data, file_name, config):
 def main():
     """Main entry point for the script."""
     if len(sys.argv) < 2:
-        print("Usage: python energi.py <csv_file_basename>")
+        print("Usage: python material.py <csv_file_basename>")
         return
 
     # Load configuration
@@ -105,12 +105,12 @@ def main():
         return
 
     # Build folder paths from config
-    indata = Path(config["energi"]["indata"])
-    arkiv = Path(config["energi"]["arkiv"])
+    indata = Path(config["material"]["indata"])
+    arkiv = Path(config["material"]["arkiv"])
 
     # Construct CSV and output file names
     csv_file = indata / f"{sys.argv[1]}.csv"
-    file_name = f"{sys.argv[1]}_energi.png"
+    file_name = f"{sys.argv[1]}_material.png"
 
     try:
         # Read CSV

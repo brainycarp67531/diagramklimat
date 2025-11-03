@@ -3,5 +3,11 @@
         "indata": "indata_energi/",
         "utdata": "utdata/",
         "arkiv": "archive/energi"
+    },
+
+    "material": {
+        "indata": "indata_material/",
+        "utdata": "utdata/",
+        "arkiv": "archive/material"
     }
 }
