@@ -8,5 +8,10 @@
     "indata": "data/material/indata",
     "utdata": "data/material/utdata",
     "arkiv": "data/material/arkiv"
+  },
+  "livslangd": {
+    "indata": "data/livslangd/indata",
+    "utdata": "data/livslangd/utdata",
+    "arkiv": "data/livslangd/arkiv"
   }
 }
