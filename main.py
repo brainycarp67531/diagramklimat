@@ -18,6 +18,7 @@ Examples:
 
 import sys
 import subprocess
+from pathlib import Path
 
 
 def main():
@@ -37,25 +38,30 @@ def main():
     chart_type = sys.argv[1].lower()
     csv_basename = sys.argv[2]
 
-    # Route to the appropriate chart generator
+    # Determine which script to use based on chart type
     if chart_type in ["energi", "material"]:
-        # Both energi and material are handled by charts.py
-        result = subprocess.run(
-            [sys.executable, "charts.py", chart_type, csv_basename],
-            capture_output=False
-        )
-        sys.exit(result.returncode)
+        script_name = "charts.py"
+        script_args = [chart_type, csv_basename]
     elif chart_type == "livslangd":
-        # livslangd is handled by livslangd.py
-        result = subprocess.run(
-            [sys.executable, "livslangd.py", csv_basename],
-            capture_output=False
-        )
-        sys.exit(result.returncode)
+        script_name = "livslangd.py"
+        script_args = [csv_basename]
     else:
         print(f"❌ Error: Unknown chart type '{chart_type}'")
         print("Valid chart types: energi, material, livslangd")
         sys.exit(1)
+
+    # Verify the target script exists
+    script_path = Path(__file__).parent / script_name
+    if not script_path.exists():
+        print(f"❌ Error: Required script '{script_name}' not found")
+        sys.exit(1)
+
+    # Run the appropriate chart generator
+    result = subprocess.run(
+        [sys.executable, script_name] + script_args,
+        capture_output=False
+    )
+    sys.exit(result.returncode)
 
 
 if __name__ == "__main__":
