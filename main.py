@@ -39,6 +39,7 @@ def main():
     csv_basename = sys.argv[2]
 
     # Determine which script to use based on chart type
+    script_dir = Path(__file__).parent
     if chart_type in ["energi", "material"]:
         script_name = "charts.py"
         script_args = [chart_type, csv_basename]
@@ -51,15 +52,16 @@ def main():
         sys.exit(1)
 
     # Verify the target script exists
-    script_path = Path(__file__).parent / script_name
+    script_path = script_dir / script_name
     if not script_path.exists():
         print(f"❌ Error: Required script '{script_name}' not found")
         sys.exit(1)
 
-    # Run the appropriate chart generator
+    # Run the appropriate chart generator in the same directory as main.py
     result = subprocess.run(
         [sys.executable, script_name] + script_args,
-        capture_output=False
+        cwd=script_dir,
+        check=False
     )
     sys.exit(result.returncode)
 
