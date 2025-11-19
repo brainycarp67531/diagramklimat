@@ -44,7 +44,7 @@ def generate_line_chart(data, file_name, config):
         data.index, data['Renoverad Pump'],
         marker='', label='Renoverad Pump', color='#4E5E40', linewidth=LINEWIDTH
     )
-    ax1.set_xlabel("Datapunkt", fontsize=10)
+    ax1.set_xlabel("Månader", fontsize=10)
     ax1.set_ylabel("t CO₂e/år (Pumpar)", fontsize=10, color='#4E5E40')
     ax1.tick_params(axis='y', labelcolor='#4E5E40')
     ax1.grid(True, linestyle='--', alpha=0.6)
